@@ -1,0 +1,38 @@
+pip install flask sqlalchemy pymysql openai PyPDF2 python-docx
+
+without venv
+all projects same packages
+A>Flask2
+b> Flask3 ##both a and b share
+
+with venv
+
+
+
+python3 -m venv venv 
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+.\venv\Scripts\Activate.ps1
+
+sqlalchemy- create_engine 
+python app and database connection
+
+sqlalchemy.orm
+python raw code- no need to write in sql query
+
+declarative_base : table properti inherit
+sessionmaker: data read , modification
+
+1-step-setup
+2-database connection
+3-
+
+{%%}---> is used for if / else conditions,loops,blocks,template logic
+
+{{ }} ---> Print value (output to HTML)
+
+
+
+
+CKM2LuGHnQEo7a6q
+
+mysql+pymysql://2Z8qsWdQucFViDE.root:CKM2LuGHnQEo7a6q@gateway01.ap-southeast-1.prod.aws.tidbcloud.com:4000/test?ssl_ca=<CA_PATH>&ssl_verify_cert=true&ssl_verify_identity=true

@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.history-container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.history-title {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.history-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+}
+
+.section-title {
+    font-size: 18px;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    color: #333;
+    border-left: 4px solid #2563eb;
+    padding-left: 8px;
+}
+
+ul {
+    margin: 0;
+    padding-left: 18px;
+}
+
+li {
+    margin-bottom: 5px;
+    color: #444;
+    font-size: 14px;
+}
+
+.resume-preview {
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #555;
+    max-height: 80px;
+    overflow: hidden;
+}
+
+.empty-box {
+    text-align: center;
+    padding: 40px;
+    background: #f3f4f6;
+    border-radius: 12px;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 14px;
+    background: #2563eb;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+</style>
+
+<div class="history-container">
+
+<h2 class="history-title">📂 Your History</h2>
+
+{% if reports and reports|length > 0 %}
+
+    {% for r in reports %}
+    <div class="history-card">
+
+        <div class="resume-preview">
+            {{ r.resume[:200] }}...
+        </div>
+
+        <div class="section-title">Skills</div>
+        <ul>
+            {% for s in r.result.get("skills", []) %}
+            <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+
+        <div class="section-title">Missing Skills</div>
+        <ul>
+            {% for s in r.result.get("missing_skills", []) %}
+            <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+
+        <div class="section-title">Roadmap</div>
+        <ul>
+            {% for s in r.result.get("roadmap", []) %}
+            <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+
+        <div class="section-title">Interview Questions</div>
+        <ul>
+            {% for s in r.result.get("interview_questions", []) %}
+            <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+
+        <div class="section-title">Career Prospects</div>
+        <ul>
+            {% for s in r.result.get("career_prospects", []) %}
+            <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+    {% endfor %}
+
+{% else %}
+
+    <div class="empty-box">
+        <h3>📭 No History Yet</h3>
+        <p>You haven't analyzed any resumes yet.</p>
+        <a href="/dashboard" class="btn">Analyze Resume</a>
+    </div>
+
+{% endif %}
+
+</div>
+
+{% endblock %}

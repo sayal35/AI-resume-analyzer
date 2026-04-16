@@ -80,9 +80,11 @@ li {
     <div class="history-card">
 
         <div class="resume-preview">
-            {{ r.resume[:200] }}...
+            Resume Preview
         </div>
-
+        <div style="display:inline-block; padding:8px 16px; background:linear-gradient(135deg,#2563eb,#1d4ed8); color:white; font-weight:600; font-size:14px; border-radius:999px; box-shadow:0 4px 12px rgba(37,99,235,0.25); margin-bottom:12px; letter-spacing:0.3px;">
+    🎯 {{ r.role }}
+</div>
         <div class="section-title">Skills</div>
         <ul>
             {% for s in r.result.get("skills", []) %}

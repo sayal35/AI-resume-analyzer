@@ -9,7 +9,7 @@
         <textarea name="resume" placeholder="Paste your resume(optional)"></textarea>
         <p>OR upload file:</p>
         <input type="file" name="file" >
-        <input name="role" placeholder="What do you want to become? (eg. Backend Developer)" required>
+        <input name="role" placeholder="Target Role (e.g. Backend Developer)" required>
         <button type="submit" id="analyzeBtn">Analyze</button>
     </form>
     <div id="loadingMsg">
@@ -23,6 +23,10 @@
     {% if result.error %}
     <p style="color: red;">Error: {{result.error}}</p>
     {% endif %}
+    <h3>🎯 Analyzed For: {{ role }}</h3>
+    
+
+    <hr>
 
     <h3>Skills</h3>
     <ul>

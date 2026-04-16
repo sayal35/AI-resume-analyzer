@@ -118,7 +118,8 @@ def dashboard():
 
                     user_id=user.id,
                     resume_text=resume_text,
-                    result= json.dumps(result)
+                    result= json.dumps(result),
+                    role=user_goal
                 )
                 db.add(report)
                 db.commit()

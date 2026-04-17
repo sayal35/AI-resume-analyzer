@@ -71,6 +71,7 @@ def dashboard():
         return redirect("/login")
     
     result=None
+    user_goal=""
 
     if request.method=="POST":
         user_goal= request.form.get("role")
@@ -108,7 +109,8 @@ def dashboard():
                     return render_template(
                         "dashboard.html",
                         user=session["user"],
-                        result=result
+                        result=result,
+                        role=user_goal
                         ) 
                 #save to db
                 db= SessionLocal()
@@ -127,7 +129,7 @@ def dashboard():
             except Exception as e:
                 result= {"error":f"AI error: {str(e)}"}
 
-    return render_template("dashboard.html",user=session["user"],result=result)
+    return render_template("dashboard.html",user=session["user"],result=result,role=user_goal)
 
 #history
 @app.route("/history")
@@ -156,7 +158,8 @@ def history():
 
         passed_reports.append({
             "resume": r.resume_text,
-            "result": parsed_result
+            "result": parsed_result,
+            "role": r.role
         })
 
     return render_template("history.html", reports=passed_reports)

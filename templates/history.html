@@ -2,136 +2,231 @@
 {% block content %}
 
 <style>
+/* ===== PAGE BACKGROUND ===== */
 .history-container {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: auto;
+    padding: 30px 20px;
+    font-family: "Inter", sans-serif;
+    background: #f6f8fc;
 }
 
+/* ===== TITLE ===== */
 .history-title {
-    font-size: 26px;
-    font-weight: 600;
-    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 30px;
+    color: #0f172a;
+    letter-spacing: -0.5px;
 }
 
+/* ===== CARD ===== */
 .history-card {
     background: #ffffff;
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.25s ease;
+}
+
+.history-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 35px rgba(15, 23, 42, 0.12);
+}
+
+/* ===== HEADER ===== */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.role-badge {
+    background: linear-gradient(135deg, #4f46e5, #2563eb);
+    color: white;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 6px 14px rgba(79, 70, 229, 0.25);
+}
+
+/* ===== RESUME PREVIEW ===== */
+.resume-preview {
+    background: #f1f5f9;
+    padding: 12px 14px;
     border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    border: 1px solid #eee;
-}
-
-.section-title {
-    font-size: 18px;
-    margin-top: 15px;
-    margin-bottom: 8px;
-    color: #333;
+    font-size: 13px;
+    color: #475569;
+    margin-bottom: 18px;
+    max-height: 70px;
+    overflow: hidden;
     border-left: 4px solid #2563eb;
-    padding-left: 8px;
 }
 
+/* ===== GRID ===== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+}
+
+/* ===== SECTION CARD ===== */
+.section {
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 14px;
+    border: 1px solid #eef2f7;
+    transition: 0.2s ease;
+}
+
+.section:hover {
+    background: #f1f5f9;
+}
+
+/* ===== SECTION TITLE ===== */
+.section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ===== LIST ===== */
 ul {
     margin: 0;
-    padding-left: 18px;
+    padding-left: 16px;
 }
 
 li {
-    margin-bottom: 5px;
-    color: #444;
-    font-size: 14px;
-}
-
-.resume-preview {
-    background: #f8fafc;
-    padding: 10px;
-    border-radius: 8px;
     font-size: 13px;
-    color: #555;
-    max-height: 80px;
-    overflow: hidden;
+    color: #334155;
+    margin-bottom: 5px;
 }
 
+/* ===== EMPTY STATE ===== */
 .empty-box {
     text-align: center;
-    padding: 40px;
-    background: #f3f4f6;
-    border-radius: 12px;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
 }
 
+.empty-box h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.empty-box p {
+    color: #64748b;
+}
+
+/* ===== BUTTON ===== */
 .btn {
     display: inline-block;
-    margin-top: 10px;
-    padding: 8px 14px;
-    background: #2563eb;
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
-    border-radius: 6px;
+    border-radius: 10px;
     text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
 }
 </style>
 
 <div class="history-container">
 
-<h2 class="history-title">📂 Your History</h2>
+    <h2 class="history-title">📂 Resume Analysis History</h2>
 
-{% if reports and reports|length > 0 %}
+    {% if reports and reports|length > 0 %}
 
-    {% for r in reports %}
-    <div class="history-card">
+        {% for r in reports %}
+        <div class="history-card">
 
-        <div class="resume-preview">
-            Resume Preview
+            <!-- Header -->
+            <div class="card-header">
+                <div class="role-badge">🎯 {{ r.role }}</div>
+            </div>
+
+            <!-- Resume Preview -->
+            <div class="resume-preview">
+                Resume Preview
+            </div>
+
+            <!-- GRID SECTIONS -->
+            <div class="grid">
+
+                <div class="section">
+                    <div class="section-title">🧠 Skills</div>
+                    <ul>
+                        {% for s in r.result.get("skills", []) %}
+                        <li>{{ s }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">⚠ Missing Skills</div>
+                    <ul>
+                        {% for s in r.result.get("missing_skills", []) %}
+                        <li>{{ s }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🛤 Roadmap</div>
+                    <ul>
+                        {% for s in r.result.get("roadmap", []) %}
+                        <li>{{ s }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">💬 Interview Qs</div>
+                    <ul>
+                        {% for s in r.result.get("interview_questions", []) %}
+                        <li>{{ s }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🚀 Career</div>
+                    <ul>
+                        {% for s in r.result.get("career_prospects", []) %}
+                        <li>{{ s }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+
         </div>
-        <div style="display:inline-block; padding:8px 16px; background:linear-gradient(135deg,#2563eb,#1d4ed8); color:white; font-weight:600; font-size:14px; border-radius:999px; box-shadow:0 4px 12px rgba(37,99,235,0.25); margin-bottom:12px; letter-spacing:0.3px;">
-    🎯 {{ r.role }}
-</div>
-        <div class="section-title">Skills</div>
-        <ul>
-            {% for s in r.result.get("skills", []) %}
-            <li>{{ s }}</li>
-            {% endfor %}
-        </ul>
+        {% endfor %}
 
-        <div class="section-title">Missing Skills</div>
-        <ul>
-            {% for s in r.result.get("missing_skills", []) %}
-            <li>{{ s }}</li>
-            {% endfor %}
-        </ul>
+    {% else %}
 
-        <div class="section-title">Roadmap</div>
-        <ul>
-            {% for s in r.result.get("roadmap", []) %}
-            <li>{{ s }}</li>
-            {% endfor %}
-        </ul>
+        <div class="empty-box">
+            <h3>📭 No History Found</h3>
+            <p>Start analyzing resumes to see your insights here.</p>
+            <a href="/dashboard" class="btn">Analyze Resume</a>
+        </div>
 
-        <div class="section-title">Interview Questions</div>
-        <ul>
-            {% for s in r.result.get("interview_questions", []) %}
-            <li>{{ s }}</li>
-            {% endfor %}
-        </ul>
-
-        <div class="section-title">Career Prospects</div>
-        <ul>
-            {% for s in r.result.get("career_prospects", []) %}
-            <li>{{ s }}</li>
-            {% endfor %}
-        </ul>
-
-    </div>
-    {% endfor %}
-
-{% else %}
-
-    <div class="empty-box">
-        <h3>📭 No History Yet</h3>
-        <p>You haven't analyzed any resumes yet.</p>
-        <a href="/dashboard" class="btn">Analyze Resume</a>
-    </div>
-
-{% endif %}
+    {% endif %}
 
 </div>
 
